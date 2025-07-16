@@ -400,20 +400,15 @@ export class LineChart {
     this.xScale.domain(xDomain);
   }
   private resetYDomain() {
-    if (this._defaultYRange != null) {
-      // Use the range specified by the caller.
-      this.yScale.domain(this._defaultYRange);
-    } else {
-      // TfScale has all the logics for scaling and we manually trigger it with
-      // `autoDomain`. However, this enables the autoDomain mode which updates
-      // the domain on any dataset change and this is not desirably especially
-      // when a run is not finished yet; we don't want the graph to change in
-      // scale while user is inspecting the graph. By setting the `domain`
-      // explicitly, we can turn the feature off.
-      this.yScale.autoDomain();
-      this.yScale.domain(this.yScale.domain());
-    }
+  if (this._ignoreYOutliers) {
+    this.yScale.domain([-0.1, 1.1]);
+  } else if (this._defaultYRange != null) {
+    this.yScale.domain(this._defaultYRange);
+  } else {
+    this.yScale.autoDomain();
+    this.yScale.domain(this.yScale.domain());
   }
+}
   private getAccessorsForComputingYRange(): Plottable.IAccessor<number>[] {
     const accessors = [this.getYAxisAccessor()];
     if (this.fillArea) {

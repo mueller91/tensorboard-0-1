@@ -375,7 +375,7 @@ The 2.6 minor series tracks TensorFlow 2.6.
 
 - Added dark mode
 - Some user settings are now kept in local storage and are persisted after page reload, including:
-  - Time Series `scalars smoothing`, `tooltip sorting method`, `ignore outliers in chart scaling`
+  - Time Series `scalars smoothing`, `tooltip sorting method`, `Limit Y to [0, 1]`
   - Settings dialog `reload data`, `reload period`, `pagination limit`
   - Dark mode
 - Time Series

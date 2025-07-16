@@ -55,7 +55,7 @@ class TfCustomScalarDashboard extends PolymerElement {
             </div>
             <div class="line-item">
               <paper-checkbox checked="{{_ignoreYOutliers}}"
-                >Ignore outliers in chart scaling</paper-checkbox
+                >Limit Y to [0, 1]</paper-checkbox
               >
             </div>
             <div id="tooltip-sorting">
