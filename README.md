@@ -2,7 +2,7 @@
 
 To run, do:
 ```
-bazel run //tensorboard -- --logdir=/mnt/persistent1/nicolas/audio_dfd/saved_models
+bazel run //tensorboard -- --logdir=...
 ```
 
 
