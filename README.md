@@ -1,6 +1,8 @@
 # TensorBoard [![GitHub Actions CI](https://github.com/tensorflow/tensorboard/workflows/CI/badge.svg)](https://github.com/tensorflow/tensorboard/actions?query=workflow%3ACI+branch%3Amaster+event%3Apush) [![GitHub Actions Nightly CI](https://github.com/tensorflow/tensorboard/workflows/nightly-release/badge.svg)](https://github.com/tensorflow/tensorboard/actions?query=workflow%3Anightly-release+branch%3Amaster) [![PyPI](https://badge.fury.io/py/tensorboard.svg)](https://badge.fury.io/py/tensorboard)
 
 To run, do:
+1) Install tensorboard via pip install (in a new conda env). We need it s.t. we have tensorboards requirements.
+2) Run the following:
 ```
 bazel run //tensorboard -- --logdir=...
 ```
