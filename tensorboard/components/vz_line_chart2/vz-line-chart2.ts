@@ -532,11 +532,13 @@ class VzLineChart2<SeriesMetadata = {}> extends LegacyElementMixin(
   }
   @observe('ignoreYOutliers', '_chart')
   _ignoreYOutliersChanged() {
+    if (!this._chart) return;
     this._chart.ignoreYOutliers(this.ignoreYOutliers);
   }
 
   @observe('ignoreYOutliersHalf', '_chart')
   _ignoreYOutliersHalfChanged() {
+    if (!this._chart) return;
     this._chart.ignoreYOutliersHalf(this.ignoreYOutliersHalf);
   }
   @observe('colorScale')
