@@ -73,6 +73,7 @@ export class TfScalarCard extends PolymerElement {
         get-data-load-url="[[getDataLoadUrl]]"
         request-data="[[requestData]]"
         ignore-y-outliers="[[ignoreYOutliers]]"
+        ignore-y-outliers-half="[[ignoreYOutliersHalf]]"
         load-data-callback="[[_loadDataCallback]]"
         load-key="[[tag]]"
         log-scale-active="[[_logScaleActive]]"
@@ -219,6 +220,9 @@ export class TfScalarCard extends PolymerElement {
 
   @property({type: Boolean})
   ignoreYOutliers: boolean;
+
+  @property({type: Boolean})
+  ignoreYOutliersHalf: boolean;
 
   @property({type: Object})
   requestManager: RequestManager;

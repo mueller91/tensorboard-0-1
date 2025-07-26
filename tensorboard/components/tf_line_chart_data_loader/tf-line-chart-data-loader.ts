@@ -77,6 +77,7 @@ class _TfLineChartDataLoader<ScalarMetadata>
         default-y-range="[[defaultYRange]]"
         fill-area="[[fillArea]]"
         ignore-y-outliers="[[ignoreYOutliers]]"
+        ignore-y-outliers-half="[[ignoreYOutliersHalf]]"
         on-chart-attached="_onChartAttached"
         smoothing-enabled="[[smoothingEnabled]]"
         smoothing-weight="[[smoothingWeight]]"
@@ -185,6 +186,9 @@ class _TfLineChartDataLoader<ScalarMetadata>
 
   @property({type: Boolean})
   ignoreYOutliers?: boolean;
+
+  @property({type: Boolean})
+  ignoreYOutliersHalf?: boolean;
 
   @property({type: Array})
   defaultXRange?: number[];

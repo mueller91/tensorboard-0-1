@@ -62,7 +62,16 @@ class TfScalarDashboard extends LegacyElementMixin(ArrayUpdateHelper) {
               <paper-checkbox
                 id="ignore-y-outlier"
                 checked="{{_ignoreYOutliers}}"
+                on-change="_onIgnoreYOutliersChanged"
                 >Limit Y to [0, 1]</paper-checkbox
+              >
+            </div>
+            <div class="line-item">
+              <paper-checkbox
+                id="ignore-y-outlier-half"
+                checked="{{_ignoreYOutliersHalf}}"
+                on-change="_onIgnoreYOutliersHalfChanged"
+                >Limit Y to [0.5, 1]</paper-checkbox
               >
             </div>
             <div id="tooltip-sorting">
@@ -158,6 +167,7 @@ class TfScalarDashboard extends LegacyElementMixin(ArrayUpdateHelper) {
                   active="[[active]]"
                   data-to-load="[[item.series]]"
                   ignore-y-outliers="[[_ignoreYOutliers]]"
+                  ignore-y-outliers-half="[[_ignoreYOutliersHalf]]"
                   multi-experiments="[[_getMultiExperiments(dataSelection)]]"
                   request-manager="[[_requestManager]]"
                   show-download-links="[[_showDownloadLinks]]"
@@ -246,6 +256,17 @@ class TfScalarDashboard extends LegacyElementMixin(ArrayUpdateHelper) {
     })
     .call(this);
 
+  @property({
+    type: Boolean,
+    observer: '_ignoreYOutliersHalfObserver',
+  })
+  _ignoreYOutliersHalf: boolean = tf_storage
+    .getBooleanInitializer('_ignoreYOutliersHalf', {
+      defaultValue: false,
+      useLocalStorage: true,
+    })
+    .call(this);
+
   @property({type: String})
   _xType: string = vz_chart_helpers.XType.STEP;
 
@@ -289,6 +310,11 @@ class TfScalarDashboard extends LegacyElementMixin(ArrayUpdateHelper) {
 
   _ignoreYOutliersObserver = tf_storage.getBooleanObserver('_ignoreYOutliers', {
     defaultValue: true,
+    useLocalStorage: true,
+  });
+
+  _ignoreYOutliersHalfObserver = tf_storage.getBooleanObserver('_ignoreYOutliersHalf', {
+    defaultValue: false,
     useLocalStorage: true,
   });
 
@@ -396,5 +422,19 @@ class TfScalarDashboard extends LegacyElementMixin(ArrayUpdateHelper) {
       displayName = displayName.slice(categoryName.length + 1);
     }
     return {description, displayName};
+  }
+
+  _onIgnoreYOutliersChanged() {
+    if (this._ignoreYOutliers && this._ignoreYOutliersHalf) {
+      this._ignoreYOutliersHalf = false;
+    }
+    this._reloadCharts();
+  }
+
+  _onIgnoreYOutliersHalfChanged() {
+    if (this._ignoreYOutliersHalf && this._ignoreYOutliers) {
+      this._ignoreYOutliers = false;
+    }
+    this._reloadCharts();
   }
 }

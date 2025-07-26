@@ -285,6 +285,9 @@ class VzLineChart2<SeriesMetadata = {}> extends LegacyElementMixin(
   @property({type: Boolean})
   ignoreYOutliers: boolean = false;
 
+  @property({type: Boolean})
+  ignoreYOutliersHalf: boolean = false;
+
   /**
    * Change how the tooltip is sorted. Allows:
    * - "default" - Sort the tooltip by input order.
@@ -528,9 +531,13 @@ class VzLineChart2<SeriesMetadata = {}> extends LegacyElementMixin(
     }
   }
   @observe('ignoreYOutliers', '_chart')
-  _outliersChanged() {
-    if (!this._chart) return;
+  _ignoreYOutliersChanged() {
     this._chart.ignoreYOutliers(this.ignoreYOutliers);
+  }
+
+  @observe('ignoreYOutliersHalf', '_chart')
+  _ignoreYOutliersHalfChanged() {
+    this._chart.ignoreYOutliersHalf(this.ignoreYOutliersHalf);
   }
   @observe('colorScale')
   _colorScaleChanged() {

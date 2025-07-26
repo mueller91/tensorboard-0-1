@@ -107,6 +107,7 @@ export class LineChart {
   private smoothingEnabled: boolean;
   private tooltipSortingMethod: string;
   private _ignoreYOutliers: boolean;
+  private _ignoreYOutliersHalf: boolean;
   private _lastMousePosition: Plottable.Point;
   private _lastDrawBBox: DOMRect;
   private _redrawRaf: number;
@@ -136,6 +137,7 @@ export class LineChart {
     this.tooltip = tooltip;
     this.datasets = [];
     this._ignoreYOutliers = false;
+    this._ignoreYOutliersHalf = false;
     // lastPointDataset is a dataset that contains just the last point of
     // every dataset we're currently drawing.
     this.lastPointsDataset = new Plottable.Dataset();
@@ -313,6 +315,14 @@ export class LineChart {
       this.resetYDomain();
     }
   }
+  public ignoreYOutliersHalf(ignoreYOutliersHalf: boolean) {
+    if (ignoreYOutliersHalf !== this._ignoreYOutliersHalf) {
+      this._ignoreYOutliersHalf = ignoreYOutliersHalf;
+      this.updateSpecialDatasets();
+      this.yScale.ignoreOutlier(ignoreYOutliersHalf);
+      this.resetYDomain();
+    }
+  }
   private getValuesForYAxisDomainCompute(): number[] {
     const accessors = this.getAccessorsForComputingYRange();
     let datasetToValues: (d: Plottable.Dataset) => number[][] = (d) => {
@@ -402,6 +412,8 @@ export class LineChart {
   private resetYDomain() {
   if (this._ignoreYOutliers) {
     this.yScale.domain([-0.1, 1.1]);
+  } else if (this._ignoreYOutliersHalf) {
+    this.yScale.domain([0.4, 1.1]);
   } else if (this._defaultYRange != null) {
     this.yScale.domain(this._defaultYRange);
   } else {
